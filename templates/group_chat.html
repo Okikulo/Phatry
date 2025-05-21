@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="chat-container">
+    <div class="chat-header">
+        <h1>{{ group.name }}</h1>
+    </div>
+    
+    <div class="chat-messages" id="messages">
+        {% for message in messages %}
+            <div class="message {% if message.user_id == session['user_id'] %}own-message{% endif %}">
+                <div class="message-info">
+                    <span class="username">{{ message.user.username }}</span>
+                    <span class="time">{{ message.created_at.strftime('%H:%M') }}</span>
+                </div>
+                <div class="message-content">{{ message.content }}</div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="chat-input">
+        <form id="messageForm">
+            <input type="text" id="message" placeholder="Type your message..." autocomplete="off" required>
+            <button type="submit">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const socket = io();
+        const messageForm = document.getElementById('messageForm');
+        const messageInput = document.getElementById('message');
+        const messagesDiv = document.getElementById('messages');
+        const groupId = "{{ group.id }}";
+        
+        // Join room on connect
+        socket.on('connect', function() {
+            socket.emit('join', {room: groupId});
+        });
+        
+        // Listen for status messages
+        socket.on('status', function(data) {
+            const statusDiv = document.createElement('div');
+            statusDiv.className = 'status-message';
+            statusDiv.textContent = data.message;
+            messagesDiv.appendChild(statusDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+        
+        // Listen for incoming messages
+        socket.on('message', function(data) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            if (data.user === "{{ session['username'] }}") {
+                messageDiv.classList.add('own-message');
+            }
+            
+            const messageInfo = document.createElement('div');
+            messageInfo.className = 'message-info';
+            
+            const username = document.createElement('span');
+            username.className = 'username';
+            username.textContent = data.user;
+            
+            const time = document.createElement('span');
+            time.className = 'time';
+            time.textContent = data.time.split(' ')[1];
+            
+            messageInfo.appendChild(username);
+            messageInfo.appendChild(time);
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.textContent = data.message;
+            
+            messageDiv.appendChild(messageInfo);
+            messageDiv.appendChild(messageContent);
+            
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+        
+        // Send message
+        messageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (messageInput.value.trim()) {
+                socket.emit('message', {
+                    message: messageInput.value,
+                    room: groupId
+                });
+                messageInput.value = '';
+            }
+        });
+        
+        // Scroll to bottom on load
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        
+        // Leave room when navigating away
+        window.addEventListener('beforeunload', function() {
+            socket.emit('leave', {room: groupId});
+        });
+    });
+</script>
+{% endblock %}
