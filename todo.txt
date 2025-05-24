@@ -1,0 +1,8 @@
+[ ] Ignore spaces in inputs.
+[ ] MongoDB 
+[ ] Tritcount
+[ ] Improved GUI
+[ ] Docker (optional I guess)
+[ ] Final Report 
+[ ] Final Presentation
+ 
