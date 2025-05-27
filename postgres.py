@@ -11,7 +11,7 @@ import sys
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.urandom(24)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://final:mysecretpassword123@localhost/data_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://final:mysecretpassword123@localhost/phatry_db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Initialize extensions
