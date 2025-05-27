@@ -1,5 +1,5 @@
 [x] Docker (optional I guess)
-[ ] Ignore spaces in inputs.
+[x] Ignore spaces in inputs.
 [ ] MongoDB 
 [ ] Tritcount
 [ ] Improved GUI
