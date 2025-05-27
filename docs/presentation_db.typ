@@ -220,7 +220,7 @@
       [
         ```python
         client: MongoClient[dict[str, Any]] = MongoClient(
-            # TODO: Actual username and password should go here
+            # NOTE: Actual username and password should go here
             "mongodb://root:mysecretpassword123@localhost:27017/"
         )
         db = client.get_database("chat")
