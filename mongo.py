@@ -1,10 +1,8 @@
-import os
-from re import findall
-import sys
-from typing import Any, TypedDict
-
 import datetime
-import pymongo
+import os
+from typing import Any
+
+from bson import ObjectId
 from flask import (
     Flask,
     Response,
@@ -19,11 +17,7 @@ from flask import (
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from pymongo import MongoClient
 from werkzeug.security import check_password_hash, generate_password_hash
-from bson import json_util, ObjectId
 
-#
-# error_log = 'error_log.txt'
-# sys.stderr = open(error_log, 'w')
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.urandom(24)
@@ -31,8 +25,8 @@ app.config["SECRET_KEY"] = os.urandom(24)
 # Initialize extensions
 socketio = SocketIO(app)
 
-
 client: MongoClient[dict[str, Any]] = MongoClient(
+    # TODO: Actual username and password should go here
     "mongodb://root:mysecretpassword123@localhost:27017/"
 )
 db = client.get_database("chat")
@@ -195,7 +189,6 @@ def group_chat(group_id):
     group = convert_doc(group)
 
     if group is None:
-        # TODO: Return proper 404
         return Response("Group not found", 404)
 
     if not db_user_is_member(group_id, user_id):
