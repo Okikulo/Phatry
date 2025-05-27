@@ -7,6 +7,15 @@ services:
       POSTGRES_PASSWORD: mysecretpassword123
       POSTGRES_PORT: 5432
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
+  mongodb:  
+    image: mongodb/mongodb-community-server:7.0.2-ubi8
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mysecretpassword123
+    volumes:
+      - ./data/mongo:/data/db
 volumes:
   data:
