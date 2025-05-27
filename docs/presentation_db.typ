@@ -38,15 +38,23 @@
       
     ]
     #toolbox.side-by-side[
-    // TODO: change screenshots
-     #image("screenshot_2025-05-27_17-01-14.png", width: 100%)   
+     #image("login.png", width: 100%)   
     ][
-     #image("screenshot_2025-05-27_18-04-19.png", width: 100%)   
+     #image("register.png", width: 100%)   
+    ]
+  ]
+]
+
+#slide[
+  #align(top)[
+    #text(3em, blue)[*Outcome*]
+    #only(1)[
+      
     ]
     #toolbox.side-by-side[
-     #image("screenshot_2025-05-27_17-59-38.png", width: 100%)   
+     #image("groupview.png", width: 100%)   
     ][
-     #image("screenshot_2025-05-27_17-35-07.png", width: 100%)   
+     #image("chat.png", width: 100%)   
     ]
   ]
 ]
@@ -224,7 +232,7 @@
             "mongodb://root:mysecretpassword123@localhost:27017/"
         )
         db = client.get_database("chat")
-        ```  
+        @@,```  
       ],
       kind: "code snippet",
       supplement: [Code],
