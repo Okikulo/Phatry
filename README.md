@@ -1,3 +1,6 @@
+# Phatry
+
+## How to use the app
 ```sh
 git clone https://github.com/Okikulo/Phatry.git
 cd Phatry
