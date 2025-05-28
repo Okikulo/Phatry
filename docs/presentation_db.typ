@@ -37,10 +37,19 @@
     #only(1)[
       
     ]
-    #toolbox.side-by-side[
-     #image("login.png", width: 100%)   
-    ][
-     #image("register.png", width: 100%)   
+    #align(center, image("tree.png", height: 80%))
+  ]
+]
+
+#slide[
+  #align(top)[
+    #text(3em, blue)[*Outcome*]
+    #only(1)[
+      #toolbox.side-by-side[
+       #image("login.png", width: 100%)   
+      ][
+       #image("register.png", width: 100%)   
+      ]
     ]
   ]
 ]
@@ -49,12 +58,11 @@
   #align(top)[
     #text(3em, blue)[*Outcome*]
     #only(1)[
-      
-    ]
-    #toolbox.side-by-side[
-     #image("groupview.png", width: 100%)   
-    ][
-     #image("chat.png", width: 100%)   
+            #toolbox.side-by-side[
+       #image("groupview.png", width: 100%)   
+      ][
+       #image("chat.png", width: 100%)   
+      ]
     ]
   ]
 ]
@@ -71,10 +79,8 @@
       [
         ```python
         # Initial config
-        app.config['SECRET_KEY'] = os.urandom(24)
         app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:password@localhost/database_db'
-        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-        
+       
         
         # Initialize extensions
         db = SQLAlchemy(app)
@@ -232,7 +238,7 @@
             "mongodb://root:mysecretpassword123@localhost:27017/"
         )
         db = client.get_database("chat")
-        @@,```  
+        ```  
       ],
       kind: "code snippet",
       supplement: [Code],
@@ -298,6 +304,7 @@ def now():
     )
   ]
   #only(4)[
+    #set text(size: 16pt)
     #figure(
       [
         ```python
@@ -324,6 +331,7 @@ def now():
     )
   ]
   #only(5)[
+    #set text(size: 14pt)
     #figure(
       [
         ```python
@@ -357,6 +365,7 @@ def now():
     )
   ]
   #only(6)[
+    #set text(size: 14pt)
     #figure(
       [
         ```python
@@ -370,11 +379,11 @@ def now():
 
           groups = db.get_collection("groups")
           group = groups.find_one(dict(_id=group_id))
-          group = convert_doc(group)
 
           if group is None:
               return Response("Group not found", 404)
 
+          group = convert_doc(group)
           if not db_user_is_member(group_id, user_id):
               db_group_member_insert(group_id, user_id)
 
@@ -384,7 +393,7 @@ def now():
       ],
       kind: "code snippet",
       supplement: [Code],
-      caption: [Common database operations as functions for convenience (2)],
+      caption: [Example application code using MongoDB],
     )
   ]
 ]
