@@ -8,6 +8,4 @@ __pycache__/
 data/
 
 # Docs
-docs/*.txt
-
-*.txt
+*.pdf
