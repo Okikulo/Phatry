@@ -8,4 +8,6 @@ __pycache__/
 data/
 
 # Docs
-docs/
+docs/*.txt
+
+*.txt
